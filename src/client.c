@@ -750,7 +750,6 @@ static int client_command(struct mux_client *client, struct usbmuxd_header *hdr)
 					if (rdata && plist_get_node_type(rdata) == PLIST_DATA) {
 						plist_get_data_val(rdata, &record_data, &record_size);
 					}
-					plist_free(dict);
 
 					if (record_id && record_data) {
 						res = config_set_device_record(record_id, record_data, record_size);
@@ -789,6 +788,7 @@ static int client_command(struct mux_client *client, struct usbmuxd_header *hdr)
 					} else {
 						rval = EINVAL;
 					}
+					plist_free(dict);
 					free(record_data);
 					if (send_result(client, hdr->tag, rval) < 0)
 						return -1;
